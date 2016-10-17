@@ -1,0 +1,26 @@
+.sidebar {
+  width: 5px;
+  background-color: #111;
+  overflow-x: hidden;
+  transition:width .1s linear;
+  overflow-y: auto;
+  white-space: nowrap;
+
+  &:hover, &.expanded {
+    width: 250px;
+    overflow-x: visible;
+  }
+
+  .scores {
+    font-family: "Lucida Grande", sans-serif;
+    font-size: 12px;
+  }
+
+  .score {
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    border-bottom: 1px solid #222;
+    border-left: 5px solid #e61d5f;
+  }
+}

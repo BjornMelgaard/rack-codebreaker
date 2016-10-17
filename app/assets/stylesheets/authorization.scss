@@ -1,0 +1,28 @@
+.logout{
+  position: fixed;
+  cursor: pointer;
+  right: 10px;
+  top: 10px;
+}
+
+#login_form {
+  margin-top: 100px;
+
+  input {
+    display: block;
+    background: transparent;
+    border: 0 none;
+    outline: 0 none;
+    font-family: monospace;
+    font-size: 2em;
+    text-align: center;
+    margin: 20px auto;
+    width: 400px;
+    transition-duration: 0.3s;
+    border-bottom: 3px solid black;
+
+    &:focus {
+      // outline:none;
+    }
+  }
+}
