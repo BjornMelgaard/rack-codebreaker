@@ -1,6 +1,5 @@
 require 'rack'
 require 'erb'
-require_relative 'web_game'
 
 #
 class Racker < WebGame

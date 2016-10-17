@@ -1,6 +1,7 @@
 require 'bundler/setup'
 require 'sprockets'
 require 'autoprefixer-rails'
+require_relative 'app/web_game'
 require_relative 'app/racker'
 
 use Rack::Reloader
