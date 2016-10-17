@@ -55,13 +55,13 @@ $ ->
     $.ajax
       url: 'api/hint'
       success: (data) ->
-        code_inputs[0].value = data
+        code_inputs[0].value = data.first_number
 
   restart = ->
     $.ajax
       url: 'api/restart'
       success: (data) ->
-        attempts_left.text(data)
+        attempts_left.text(data.attempts_left)
         attempts_message.show()
         submit_btn.show()
         win_message.hide()

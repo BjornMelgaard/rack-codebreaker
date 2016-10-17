@@ -9,54 +9,73 @@ class WebGame
   @@scores = Hash.new { |hash, key| hash[key] = [] }
 
   if File.exist?(SCORES_PATH)
+    puts "load scores"
     serialized_scores = File.read(SCORES_PATH)
     scores = YAML.load(serialized_scores)
     @@scores.merge!(scores)
   end
 
-  def game
-    @@pending_games[player_name]
+  def initialize(player_name)
+    @player_name = player_name
   end
 
   def hint
     puts game.instance_variable_get(:@secret)
-    render_json game.first_number
+    { first_number: game.first_number }
   end
 
-  def guess
-    input = @request.params['input']
-    if @request.post? && game.code_valid?(input)
-      marks = game.guess(input)
-      output = { marks: marks, win: game.win?, loose: game.loose? }
-      if game.win?
-        output[:score] = game.statistic
-        save_score
-      elsif game.loose?
-        output[:secret_code] = game.secret_code
-      end
-      @@pending_games.delete(player_name) if game.ended?
-      render_json output
+  def guess(input)
+    if game.code_valid?(input)
+      @output = { marks: game.guess(input) }
+      win      if game.win?
+      loose    if game.loose?
+      end_game if game.ended?
+      @output
     else
-      render_json({ message: 'Wrong input' }, UNPROCESSABLE_ENTITY)
+      { message: 'Wrong input', status: UNPROCESSABLE_ENTITY }
     end
   end
 
   def restart
-    @@pending_games.delete(player_name)
-    render_json game.attempts_left
+    end_game
+    { attempts_left: game.attempts_left }
+  end
+
+  def code_length
+    game.code_length
+  end
+
+  def attempts_left
+    game.attempts_left
   end
 
   def scores
-    @@scores[player_name]
-  end
-
-  def self.load_scores
+    @@scores[@player_name]
   end
 
   private
 
+  def game
+    @@pending_games[@player_name]
+  end
+
+  def win
+    @output[:win] = true
+    @output[:score] = game.statistic
+    save_score
+  end
+
+  def loose
+    @output[:loose] = true
+    @output[:secret_code] = game.secret_code
+  end
+
+  def end_game
+    @@pending_games.delete(@player_name)
+  end
+
   def save_score
-    @@scores[player_name] << game.statistic
+    @@scores[@player_name] << game.statistic
     serialized = YAML.dump(@@scores)
     File.open(SCORES_PATH, 'w') { |f| f.write(serialized) }
   end

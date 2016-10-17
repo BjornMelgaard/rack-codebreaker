@@ -2,22 +2,25 @@ require 'rack'
 require 'erb'
 
 #
-class Racker < WebGame
+class Racker
   def self.call(env)
     new(env).process.finish
   end
 
   def initialize(env)
     @request = Rack::Request.new(env)
+    @game = WebGame.new(player_name) if player_name?
   end
 
   def process
+    return redirect_to('/login') if !player_name? && @request.path != '/login'
+
     case @request.path
-    when '/' then player_name.empty? ? redirect_to('/login') : render('game')
-    when '/login' then render('login')
-    when '/api/hint' then hint
-    when '/api/guess' then guess
-    when '/api/restart' then restart
+    when '/'            then render('game')
+    when '/login'       then render('login')
+    when '/api/hint'    then render_json @game.hint
+    when '/api/guess'   then render_json @game.guess(@request.params['input'])
+    when '/api/restart' then render_json @game.restart
     else redirect_to('/')
     end
   end
@@ -44,7 +47,12 @@ class Racker < WebGame
     @request.cookies['player_name']
   end
 
-  def render_json(data, status = 200)
+  def player_name?
+    !player_name.nil? && !player_name.empty?
+  end
+
+  def render_json(data = {})
+    status = data.delete(:status) || 200
     Rack::Response.new(data.to_json, status, 'Content-Type' => 'application/json')
   end
 end
