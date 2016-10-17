@@ -8,7 +8,7 @@
     <script src="/assets/application.js"></script>
   </head>
   <body>
-    <% unless player_name.empty? %>
+    <% if player_name? %>
       <img class="logout" src="assets/logout.png"></img>
       <nav class="sidebar">
         <ul class="scores">

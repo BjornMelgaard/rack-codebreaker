@@ -13,7 +13,7 @@ class Racker < WebGame
 
   def process
     case @request.path
-    when '/' then player_name.empty? ? redirect_to('/login') : render('game')
+    when '/' then player_name? ? render('game') : redirect_to('/login')
     when '/login' then render('login')
     when '/api/hint' then hint
     when '/api/guess' then guess
@@ -42,6 +42,10 @@ class Racker < WebGame
 
   def player_name
     @request.cookies['player_name']
+  end
+
+  def player_name?
+    !player_name.nil? && !player_name.empty?
   end
 
   def render_json(data, status = 200)
