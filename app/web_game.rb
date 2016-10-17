@@ -8,8 +8,9 @@ class WebGame
   @@pending_games = Hash.new { |hash, key| hash[key] = Codebreaker::Game.new }
   @@scores = Hash.new { |hash, key| hash[key] = [] }
 
-  File.open(SCORES_PATH, 'r') do |file|
-    scores = YAML.load(file.read)
+  if File.exist?(SCORES_PATH)
+    serialized_scores = File.read(SCORES_PATH)
+    scores = YAML.load(serialized_scores)
     @@scores.merge!(scores)
   end
 
