@@ -1,4 +1,23 @@
-.code_wrapper {
+.btn-group {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+
+.btn-guess {
+  background-color: #4CAF50;
+}
+
+.btn-restart {
+  background-color: #548fc5;
+}
+
+.message {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.codes {
   display: flex;
   justify-content: space-between;
   margin: 30px auto;

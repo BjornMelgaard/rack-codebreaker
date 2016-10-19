@@ -1,16 +1,16 @@
 <form action='/api/guess' id='playground_form'>
-  <div class="code_wrapper">
+  <div class="codes">
     <% @game.code_length.times do |index| %>
       <div class="code">
-        <input type="text" maxlength="1" name="code_<%= index %>"   required>
+        <input type="text" maxlength="1" name="code_<%= index %>" required>
       </div>
     <% end %>
   </div>
-  <p id="attempts_message">Attempts left: <span id="attempts_left"><%= @game.attempts_left %></span></p>
-  <p id="win_message" style="display: none">You won!! Try again?</p>
-  <p id="loose_message" style="display: none">You loose, secret code was <span id="secret"></span></p>
+  <p class="message attempts ">Attempts left: <span id="attempts_left"><%= @game.attempts_left %></span></p>
+  <p class="message win" hidden>You won!! Try again?</p>
+  <p class="message loose" hidden>You loose, secret code was <span id="secret"></span></p>
   <div class="btn-group">
-    <button class="btn-blue" id='restart_btn'>Restart</button>
-    <button class="btn-green" id='submit_btn' type="submit">Submit</button>
+    <button class="btn-restart">Restart</button>
+    <button class="btn-guess" type="submit">Submit</button>
   </div>
 </form>

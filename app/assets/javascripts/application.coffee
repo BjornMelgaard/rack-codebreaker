@@ -7,13 +7,20 @@ $ ->
   form = $("#playground_form")
   code_wrappers = form.find(".code")
   code_inputs = code_wrappers.find("input")
+
   attempts_left = $("#attempts_left")
-  restart_btn = form.find("#restart_btn")
-  submit_btn = form.find("#submit_btn")
-  attempts_message = form.find('#attempts_message')
-  win_message = form.find('#win_message')
-  loose_message = form.find('#loose_message')
-  scores_count = $(".score").length
+  secret = $("#secret")
+
+  restart_btn = form.find(".btn-restart")
+  guess_btn = form.find(".btn-guess")
+
+  attempts_message = form.find('.message.attempts')
+  win_message = form.find('.message.win')
+  loose_message = form.find('.message.loose')
+
+  logo = $(".logo")
+  scores_sidebar = $('.scores')
+  scores_counter = $(".score").length
 
   # api
   show_marks = (marks) ->
@@ -36,18 +43,18 @@ $ ->
       input.value = ''
 
   score_message = (score) ->
-    "<li class='score'>Game #{++scores_count}: attempts - #{score.attempts_used}/#{score.attempts_number}, time - #{score.time_taken} seconds</li>"
+    "<li class='score'>Game #{++scores_counter}: attempts - #{score.attempts_used}/#{score.attempts_number}, time - #{score.time_taken} seconds</li>"
 
   win = (score) ->
     attempts_message.hide()
-    submit_btn.hide()
+    guess_btn.hide()
     win_message.show()
-    $('.scores').append score_message(score)
+    scores_sidebar.append score_message(score)
 
   loose = (secret_code) ->
     attempts_message.hide()
-    submit_btn.hide()
-    $('#secret').text(secret_code)
+    guess_btn.hide()
+    secret.text(secret_code)
     loose_message.show()
 
   hint = ->
@@ -63,7 +70,7 @@ $ ->
       success: (data) ->
         attempts_left.text(data.attempts_left)
         attempts_message.show()
-        submit_btn.show()
+        guess_btn.show()
         win_message.hide()
         loose_message.hide()
         remove_marks()
@@ -106,8 +113,8 @@ $ ->
     event.preventDefault()
     restart()
 
-  $(".logo").click hint
+  logo.click hint
 
-  $("#playground_form").submit (event) ->
+  form.submit (event) ->
     event.preventDefault()
     guess()

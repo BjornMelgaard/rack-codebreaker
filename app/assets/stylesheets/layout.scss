@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar,
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-track-piece,
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-corner,
+::-webkit-resizer {
+    border-radius: 10px;
+}
+
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: #f6f6f6 url('body_bg.gif');
+  display: flex;
+  flex-direction: row;
+  font-family: monospace;
+}
+
+button {
+  display: block;
+  font-size: large;
+  color: white;
+  padding: 14px 30px;
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+}
+
+[hidden] {
+  display: none;
+}
+
+.main {
+  flex: 1;
+  height: 100%;
+}
+
+.logo {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 4em;
+  color: #333;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.logout {
+  position: fixed;
+  cursor: pointer;
+  right: 10px;
+  top: 10px;
+}
+
+.sidebar {
+  width: 5px;
+  background-color: #111;
+  overflow-x: hidden;
+  transition:width .1s linear;
+  overflow-y: auto;
+  white-space: nowrap;
+
+  &:hover, &.expanded {
+    width: 250px;
+    overflow-x: visible;
+  }
+
+  .scores {
+    font-family: "Lucida Grande", sans-serif;
+    font-size: 12px;
+  }
+
+  .score {
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    border-bottom: 1px solid #222;
+    border-left: 5px solid #e61d5f;
+  }
+}
+
