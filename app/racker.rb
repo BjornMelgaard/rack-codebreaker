@@ -1,5 +1,6 @@
 require 'rack'
 require 'erb'
+require_relative 'web_game'
 
 #
 class Racker
@@ -14,12 +15,13 @@ class Racker
 
   def process
     return redirect_to('/login') if !player_name? && @request.path != '/login'
+    # puts "player_name=#{player_name}, player_name?=#{player_name?}, @request.path=#{@request.path}"
 
     case @request.path
     when '/'            then render('game')
     when '/login'       then render('login')
     when '/api/hint'    then render_json @game.hint
-    when '/api/guess'   then render_json @game.guess(@request.params['input'])
+    when '/api/guess'   then render_json @game.guess(@request.params['guess'])
     when '/api/restart' then render_json @game.restart
     else redirect_to('/')
     end
@@ -28,11 +30,11 @@ class Racker
   private
 
   def render(page)
-    file    = File.read("app/views/#{page}.html.erb")
-    layouts = File.read('app/views/layout.html.erb')
+    file   = File.read("app/views/#{page}.html.erb")
+    layout = File.read('app/views/layout.html.erb')
 
     content = ERB.new(file).result(binding)
-    final   = ERB.new(layouts).result(binding)
+    final   = ERB.new(layout).result(binding)
 
     Rack::Response.new(final)
   end

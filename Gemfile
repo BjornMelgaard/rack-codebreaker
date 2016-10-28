@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.3.1'
 
 gem 'codebreaker', git: 'https://github.com/BjornMelgaard/codebreaker', branch: 'development'
 gem 'rake'
@@ -18,4 +19,7 @@ end
 group :development, :test do
   gem 'guard-rspec', require: false
   gem 'rspec'
+  gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'show_me_the_cookies'
 end

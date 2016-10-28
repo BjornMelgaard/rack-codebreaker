@@ -1,10 +1,11 @@
 require 'bundler/setup'
 require 'sprockets'
 require 'autoprefixer-rails'
-require_relative 'app/web_game'
-require_relative 'app/racker'
 
-use Rack::Reloader
+$LOAD_PATH.unshift File.expand_path('../app', __FILE__)
+require 'racker'
+
+use Rack::Reloader if ENV['RACK_ENV'] == 'development'
 
 assets = Sprockets::Environment.new do |env|
   env.append_path 'app/assets/images'
