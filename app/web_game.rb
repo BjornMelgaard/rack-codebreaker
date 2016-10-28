@@ -1,26 +1,17 @@
 require 'codebreaker'
 require 'yaml'
-#
+require_relative 'database'
+
 class WebGame
   UNPROCESSABLE_ENTITY = 422
-  SCORES_PATH = 'scores.yaml'.freeze
 
   @@pending_games = Hash.new { |hash, key| hash[key] = Codebreaker::Game.new }
-  @@scores = Hash.new { |hash, key| hash[key] = [] }
-
-  if File.exist?(SCORES_PATH)
-    puts "load scores"
-    serialized_scores = File.read(SCORES_PATH)
-    scores = YAML.load(serialized_scores)
-    @@scores.merge!(scores)
-  end
 
   def initialize(player_name)
     @player_name = player_name
   end
 
   def hint
-    puts game.instance_variable_get(:@secret)
     { first_number: game.first_number }
   end
 
@@ -32,7 +23,10 @@ class WebGame
       end_game if game.ended?
       @output
     else
-      { message: 'Wrong input', status: UNPROCESSABLE_ENTITY }
+      {
+        message: "Wrong input, you must enter #{game.code_length} numbers from 1 to 6",
+        status: UNPROCESSABLE_ENTITY
+      }
     end
   end
 
@@ -50,7 +44,7 @@ class WebGame
   end
 
   def scores
-    @@scores[@player_name]
+    Database.get_scores(@player_name)
   end
 
   private
@@ -75,8 +69,6 @@ class WebGame
   end
 
   def save_score
-    @@scores[@player_name] << game.statistic
-    serialized = YAML.dump(@@scores)
-    File.open(SCORES_PATH, 'w') { |f| f.write(serialized) }
+    Database.save_result(@player_name, game.statistic)
   end
 end

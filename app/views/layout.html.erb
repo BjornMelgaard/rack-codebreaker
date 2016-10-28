@@ -12,7 +12,7 @@
       <img class="logout" src="assets/logout.png"></img>
       <nav class="sidebar">
         <ul class="scores">
-          <% @game.scores.each_with_index do |score, index| %>
+          <% @game&.scores&.each_with_index do |score, index| %>
             <li class="score">Game <%= index + 1 %>: attempts - <%= score[:attempts_used] %>/<%= score[:attempts_number] %>, time - <%= score[:time_taken] %> seconds</li>
           <% end %>
         </ul>
