@@ -1,5 +1,6 @@
 feature 'Application' do
   let(:secret) { '1234' }
+
   before do
     allow_any_instance_of(Codebreaker::Game).to receive(:generate_secret)
       .with(4)
@@ -13,7 +14,6 @@ feature 'Application' do
     visit '/'
     expect(page).to have_current_path('/login')
     expect(page).to have_content 'Codebreaker'
-
     expect(Database).to receive(:get_scores) # mocks checking
     fill_in('Please, enter your name', with: 'test')
     click_button('Login')
@@ -52,6 +52,14 @@ feature 'Application' do
       expect(find('ul.scores')).to have_selector('li.score', count: 1)
       click_button('Restart')
       expect_normal_playground
+    end
+
+    scenario 'wrong input' do
+      page.has_content? # wait for page to load # TODO find another way
+      guess('1239')
+      expect_error
+      guess('1111')
+      expect(page).not_to have_selector('.error')
     end
   end
 end

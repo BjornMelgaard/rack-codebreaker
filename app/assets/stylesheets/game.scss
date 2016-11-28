@@ -13,8 +13,8 @@
 }
 
 .message {
-  text-align: center;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .codes {
@@ -29,10 +29,10 @@
   position: relative;
 
   input {
-    color: transparent;
     background: transparent;
     border: 0 none;
     border-bottom: 3px solid black;
+    color: transparent;
     width: 47px;
     outline: 0 none;
     font-family: monospace;
@@ -50,7 +50,7 @@
   font-family: monospace;
   font-size: 6em;
   position: absolute;
-  left: 0px;
+  left: 0;
   top: 85px;
 }
 

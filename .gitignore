@@ -8,3 +8,6 @@
 /tmp/
 scores.yaml
 *.gem
+image_name.png
+screenshot.png
+capybara-*

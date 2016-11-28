@@ -1,4 +1,4 @@
-<form action='/api/guess' id='playground_form'>
+<form action='/api/guess' class='playground-form'>
   <div class="codes">
     <% @game&.code_length&.times do |index| %>
       <div class="code">
@@ -6,12 +6,12 @@
       </div>
     <% end %>
   </div>
-  <p class="message attempts ">Attempts left: <span id="attempts_left"><%= @game&.attempts_left %></span></p>
+  <p class="message attempts">Attempts left: <span class="counter"><%= @game&.attempts_left %></span></p>
   <p class="message win" hidden>You won!! Try again?</p>
-  <p class="message loose" hidden>You loose, secret code was <span id="secret"></span></p>
+  <p class="message loose" hidden>You loose, secret code was <span class="secret"></span></p>
   <p class="message error" hidden></p>
   <div class="btn-group">
     <button class="btn-restart">Restart</button>
-    <button class="btn-guess" type="submit">Submit</button>
+    <button class="btn-guess">Submit</button>
   </div>
 </form>

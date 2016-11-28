@@ -3,7 +3,7 @@ require_relative 'wait_for_ajax'
 module GameHelper
   def guess(code)
     page.execute_script %(
-      $("#playground_form").find("input").each(function(index, item) {
+      $(".playground-form").find("input").each(function(index, item) {
         return $(item).val("#{code}".charAt(index));
       });
     )
@@ -15,6 +15,7 @@ module GameHelper
     expect(page).to     have_selector('.attempts')
     expect(page).not_to have_selector('.win')
     expect(page).not_to have_selector('.loose')
+    expect(page).not_to have_selector('.error')
     expect(page).to     have_selector('.btn-restart')
     expect(page).to     have_selector('.btn-guess')
     expect(page).to     have_selector('.code', count: 4)
@@ -26,19 +27,29 @@ module GameHelper
     expect(page).not_to have_selector('.attempts')
     expect(page).to     have_selector('.win')
     expect(page).not_to have_selector('.loose')
+    expect(page).not_to have_selector('.error')
     expect(page).to     have_selector('.btn-restart')
     expect(page).not_to have_selector('.btn-guess')
-    expect(page).to     have_selector('.code', count: 4)
   end
 
   def expect_to_loose
     expect(page).not_to have_selector('.attempts')
     expect(page).not_to have_selector('.win')
     expect(page).to     have_selector('.loose')
+    expect(page).not_to have_selector('.error')
     expect(page).to     have_selector('.btn-restart')
     expect(page).not_to have_selector('.btn-guess')
-    expect(page).to     have_selector('.code', count: 4)
     expect(page).to     have_content("You loose, secret code was #{secret}")
+  end
+
+  def expect_error
+    expect(page).to     have_selector('.attempts')
+    expect(page).not_to have_selector('.win')
+    expect(page).not_to have_selector('.loose')
+    expect(page).to     have_selector('.error')
+    expect(page).to     have_selector('.btn-restart')
+    expect(page).to     have_selector('.btn-guess')
+    expect(page).to     have_content('Wrong input')
   end
 end
 

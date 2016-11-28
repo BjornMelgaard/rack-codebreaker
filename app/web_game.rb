@@ -17,11 +17,11 @@ class WebGame
 
   def guess(input)
     if game.code_valid?(input)
-      @output = { marks: game.guess(input) }
-      win      if game.win?
-      loose    if game.loose?
-      end_game if game.ended?
-      @output
+      @latest_marks = game.guess(input)
+      output = generate_output
+      save_score          if game.win?
+      remove_current_game if game.ended?
+      output
     else
       {
         message: "Wrong input, you must enter #{game.code_length} numbers from 1 to 6",
@@ -31,7 +31,7 @@ class WebGame
   end
 
   def restart
-    end_game
+    remove_current_game
     { attempts_left: game.attempts_left }
   end
 
@@ -53,18 +53,20 @@ class WebGame
     @@pending_games[@player_name]
   end
 
-  def win
-    @output[:win] = true
-    @output[:score] = game.statistic
-    save_score
+  def generate_output
+    buffer = { marks: @latest_marks, attempts_left: attempts_left }
+    if game.win?
+      buffer[:win] = true
+      buffer[:score] = game.statistic
+    end
+    if game.loose?
+      buffer[:loose] = true
+      buffer[:secret_code] = game.secret_code
+    end
+    buffer
   end
 
-  def loose
-    @output[:loose] = true
-    @output[:secret_code] = game.secret_code
-  end
-
-  def end_game
+  def remove_current_game
     @@pending_games.delete(@player_name)
   end
 

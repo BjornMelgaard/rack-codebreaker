@@ -8,12 +8,12 @@ gem 'sprockets', '~> 3.0'
 gem 'sass'
 gem 'coffee-script'
 gem 'uglifier'
-gem 'websocket-rack'
 gem 'autoprefixer-rails'
 
 group :development do
   gem 'byebug'
-  gem 'guard-rack', require: false
+  gem 'guard-livereload', require: false
+  gem 'rack-livereload'
 end
 
 group :development, :test do
