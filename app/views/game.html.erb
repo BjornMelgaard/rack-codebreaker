@@ -1,6 +1,6 @@
 <form action='/api/guess' class='playground-form'>
   <div class="codes">
-    <% @game&.code_length&.times do |index| %>
+    <% @game.code_length.times do |index| %>
       <div class="code">
         <input type="text" maxlength="1" name="code_<%= index %>" required>
       </div>

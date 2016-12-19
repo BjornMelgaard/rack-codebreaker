@@ -5,7 +5,9 @@ require_relative 'database'
 class WebGame
   UNPROCESSABLE_ENTITY = 422
 
-  @@pending_games = Hash.new { |hash, key| hash[key] = Codebreaker::Game.new }
+  def self.pending_games
+    @pending_games ||= Hash.new { |hash, key| hash[key] = Codebreaker::Game.new }
+  end
 
   def initialize(player_name)
     @player_name = player_name
@@ -50,7 +52,7 @@ class WebGame
   private
 
   def game
-    @@pending_games[@player_name]
+    WebGame.pending_games[@player_name]
   end
 
   def generate_output
@@ -67,7 +69,7 @@ class WebGame
   end
 
   def remove_current_game
-    @@pending_games.delete(@player_name)
+    WebGame.pending_games.delete(@player_name)
   end
 
   def save_score
