@@ -35,7 +35,9 @@ describe Database do
   describe '#save_result' do
     subject { Database.save_result('test', '') }
     it 'save player statictics', scores_empty?: true do
-      expect { subject }.not_to change { File.exist? Database::DB_PATH } # because writing to file is mocked
+      expect {
+        subject
+      }.not_to change { File.exist? Database::DB_PATH } # test is mocking work
     end
   end
 end

@@ -37,6 +37,7 @@ feature 'Application' do
 
     scenario 'win' do
       page.has_content? # wait for page to load # TODO find another way
+      expect(Database).to receive(:save_result)
       guess(secret)
       expect_to_win
       expect(find('ul.scores')).to have_selector('li.score', count: 2)
@@ -47,6 +48,7 @@ feature 'Application' do
     scenario 'loose' do
       page.has_content? # wait for page to load # TODO find another way
       11.times { guess('1243') }
+      expect(Database).not_to receive(:save_result)
       expect_to_loose
       expect(page).to have_css('.failure', count: 2)
       expect(find('ul.scores')).to have_selector('li.score', count: 1)
