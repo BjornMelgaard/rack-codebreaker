@@ -52,7 +52,7 @@ class WebGame
   private
 
   def game
-    WebGame.pending_games[@player_name]
+    @game = WebGame.pending_games[@player_name]
   end
 
   def generate_output
