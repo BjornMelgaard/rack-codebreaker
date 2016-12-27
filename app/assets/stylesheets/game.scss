@@ -1,0 +1,65 @@
+.btn-group {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+
+.btn-guess {
+  background-color: #4CAF50;
+}
+
+.btn-restart {
+  background-color: #548fc5;
+}
+
+.message {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.codes {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px auto;
+  margin-bottom: 80px;
+  width: 400px;
+}
+
+.code {
+  position: relative;
+
+  input {
+    background: transparent;
+    border: 0 none;
+    border-bottom: 3px solid black;
+    color: transparent;
+    width: 47px;
+    outline: 0 none;
+    font-family: monospace;
+    font-size: 6em;
+    text-shadow: 0 0 0 #333;
+    transition-duration: 0.3s;
+   
+    &:focus {
+      box-shadow: 0px 3px 0px 0px black;
+    }
+  }
+}
+
+.success:after, .failure:after {
+  font-family: monospace;
+  font-size: 6em;
+  position: absolute;
+  left: 0;
+  top: 85px;
+}
+
+.success:after {
+  content: "+";
+  color: green;
+}
+
+.failure:after {
+  content: "-";
+  color: red;
+}

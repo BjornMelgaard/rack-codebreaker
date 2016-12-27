@@ -1,0 +1,3 @@
+--color
+--require rack_helper
+--format d

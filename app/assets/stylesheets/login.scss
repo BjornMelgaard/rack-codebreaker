@@ -1,0 +1,22 @@
+.login-form {
+  margin-top: 100px;
+
+  input {
+    display: block;
+    background: transparent;
+    border: 0 none;
+    outline: 0 none;
+    font-family: monospace;
+    font-size: 2em;
+    text-align: center;
+    margin: 20px auto;
+    width: 400px;
+    transition-duration: 0.3s;
+    border-bottom: 3px solid black;
+  }
+
+  button[type="submit"] {
+    margin: auto;
+    background-color: #4CAF50;
+  }
+}
